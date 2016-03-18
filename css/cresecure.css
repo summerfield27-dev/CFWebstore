@@ -1,0 +1,46 @@
+#dspcresecure U { 
+	text-decoration:none; 
+} 
+
+#dspcresecure table.formtext { 
+	background-color:#FFF; 
+	border-width: 1px;
+	border-style: solid;
+	border-color: black;
+	padding:15px; 
+} 
+
+.main{ 
+	font-family:Arial, Helvetica, sans-serif; 	
+} 
+
+.main a:hover{ 
+	text-decoration:underline; 
+} 
+
+.main H2{ 
+	color:#000; 
+	} 
+	
+.main input, .main select { 
+	BACKGROUND-COLOR: #fbfbfb;
+	BORDER-BOTTOM: #999999 1px solid;
+	BORDER-LEFT: #999999 1px solid;
+	BORDER-RIGHT: #999999 1px solid;
+	BORDER-TOP: #999999 1px solid;
+	COLOR: #003163;
+	FONT-SIZE: 12px;
+}
+
+.main #submitButton{ 
+	BORDER-RIGHT: 1px outset;
+	BORDER-TOP: 1px outset;
+	FONT-WEIGHT: bold;
+	FONT-SIZE: 11px;
+	BORDER-LEFT: 1px outset;
+	COLOR: white;
+	BORDER-BOTTOM: 1px outset;
+	BACKGROUND-COLOR: #999999;
+	text-align : center;
+} 
+

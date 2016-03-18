@@ -1,0 +1,57 @@
+
+This file contains notes for each CFWebstore release, in particular for users upgrading from older versions. 
+
+Version 6.50
+---
+This release is a large maintenance release with changes to the majority of the files. It includes new code to prevent CSRF attacks (validating form submissions are not coming from an external source), lots of cleanup and style fixes to the code, various bug fixes, etc. Some sections were reorganized and the fckeditor directory was renamed due to some issues on CF9 servers, so watch for those. It also includes updates to the shipping APIs to the latest versions, as the older ones are slated for retirement. 
+
+Also includes in this release are wide-spread changes to allow use of the software inside Mura CMS (and possibly other CMS systems). The store now uses different variables for handling store paths such as "SecureSelf" and "StoreSelf" so be sure to update any layout files as needed to correct pathing issues. 
+
+New features include the ability for an admin to login as any user in the system, for the purposes of placing orders, also included is a new payment gateway service, CRE Secure, which provides 3rd party handling of credit card payments, while skinned to match your site. This allows for fulfillment of all PCI and PA-DSS requirements. 
+
+Also included is the ability to use multiple shipping types, and updates to the Shift4 payment gateway to include partial payments and i4Go support. The store now can use PayPal Express instead of the old IPN Standard method, and void and refund credit card functions are available for some gateways. 
+
+To use this version, first run the appropriate update script in the V65update directory.
+
+
+Version 6.44
+---
+This is a small release that includes some changes to help with shared SSL setups and some corrections and improved error handling for version 5 updates. It also includes a couple small database changes to the product option tables. We found that some stores upgrading from version 5 needed a longer field length for the option choices so decided to increase the length to prevent errors during upgrades and while editing the options. While these database changes are not critical to make, it's recommended that you change the fields to prevent possible data truncation errors when creating new options. 
+
+Also included in this release are some changes to the DHTML menu functions. You can now easily pass in a  parent ID for starting the menu as well as a value for the number of levels to display. You can set these values in the functions at the end of the put_catmenu.cfm and put_pagemenu.cfm files. 
+
+Finally, this release includes some improved error handling with PayPal IPN transactions. This should reduce the chance of failed PayPal transactions. 
+
+
+Version 6.43
+---
+This is a relatively minor release but does include some important security updates that are worth upgrading to have. The SQL injection scanner has been updated to also scan for cross-site scripting attacks, and the alternate WYSIWYG editor InnovaStudio has been removed as it was not really needed and cannot be guaranteed to be secure against attacks if configured for uploads. The file attachment email has received some additional modifications, and will *require* a temp file location to be used. Some additional changes are done for better security when setting up the software as a demo store such that the admin area is open to the public. Some additional files and directories removed so be sure to check for those as well. 
+
+
+Version 6.42
+---
+This release includes some changes to the config.cfm file so be careful when upgrading to include these, but don't overwrite your current store settings! One of the new settings included is for a temp directory for file uploads. If you use the file attachment contact us form, it is highly recommended that you use this to accept uploads outside of the webroot. For other sites, it's a good idea to use just as extra protection against attacks should your administrator account be compromised.
+
+Be sure also when performing upgrades to use a file comparison tool and remove any unused files as well. The customtags directory in particular has been cleaned out of any unused files, so be sure when performing your upgrade to remove these. 
+
+
+Version 6.41
+---
+This release addresses some additional issues when running the software on a shared SSL to try and properly maintain sessions. It also includes the updated PayFlowPro gateway integration. The CFX tag used for PayFlowPro prior to this release will be discontinued in Sept. 2009 so be sure if you are using PayFlow to update your store to use the new HTTPS option before then. 
+
+If you are using Shared SSL, be very diligent about any store links you create yourself, in your layouts and menus. They MUST have the request variables added on the end to properly maintain sessions. For any links that start with ‘Request.SecureURL’, use Request.AddToken on the end, and for any that start with ‘Request.StoreURL’ (or nothing) use the Request.Token2.
+
+Version 6.40
+---
+This release discontinues the option to save credit card data, with the exception of the Shift4 gateway which uses tokenization instead of saving actual card numbers. This change is due to PCI Compliance requirements which make saving card data difficult for all but the largest stores. Protection of card information goes beyond what we are able to do at the software level, with high-level encryption requirements, dedicated server and firewalls, security audits, etc. The changes in this version are fairly minimal and can be modified in the code, but it's highly recommended that you migrate your clients off of any storage of card data as soon as possible as they will not be in compliance until they do. 
+
+If you are using the recurring membership function and using stored user credit card information to renew memberships, be aware that if you are not currently on Shift4, you will either need to have customers place new orders when it is time to renew to create the token information, or contact Dogpatch Software to help convert them to the Shift4 gateway automatically. 
+
+This release also has a new setting in the config.cfm file so be sure to copy the new line over without overwriting your current settings. This new setting is used to configure whether you use a shared or dedicated SSL on your store. It is highly recommended that if you accept credit cards on your site that you have your own SSL and turn this setting off. This will prevent any passing of session ID information on the URL and will also use additional security on your admin area. 
+
+The entire admin and user section is now being secured behind SSL (if on). Be sure to update any additional links you may have to admin or user functions to be sure they use the Request.SecureURL setting, but the software will redirect to the secure link if possible. 
+
+This version also now requires the use of cookies to checkout. This is another change to improve security and reduce the chance of session spoofing. A new page has been added (fuseaction=page.nocookies) which is displayed to customers that try to place an order and do not have their cookies turned on. Be sure to add this new system page to the Pages & Menus section. Sample text for this page would be : "This site requires cookies in order to shop and to checkout. This is the safest and most secure way to conduct online business so is done for your safety and convenience. Please check your browser settings and ensure that you have set it to allow cookies."
+
+A final important note, the variable setting "Session.URLToken" (along with any ampersand in front) has been replaced with a new setting, Request.AddToken. If you have made any modifications or additions to the code, be sure that you search and replace all of the instances of this variable or you may experience unexpected logouts in your store. 
+
